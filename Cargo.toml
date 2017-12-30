@@ -1,0 +1,13 @@
+[package]
+name = "netflow_collector"
+version = "0.1.0"
+authors = ["Kris <kris@catdamnit.com>"]
+
+[dependencies]
+tokio-core = "*"
+futures = "0.1"
+futures-cpupool = "0.1"
+time = "0.1"
+clap = "2.2"
+syslog = "~3.3.0"
+netflow_v9 = { git = "https://github.com/Caspinol/netflow_v9" }
