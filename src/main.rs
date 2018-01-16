@@ -125,7 +125,11 @@ fn main() {
     let mut cc = Parser::new();
     
     // Bind both our sockets and then figure out what ports we got.
-    let collector = UdpSocket::bind(&addr, &handle).unwrap();
+    let collector = UdpSocket::bind(&addr, &handle).map_err(|_| {
+        log.info(&format!("Failed to bind to {}.",addr));
+        std::process::exit(1);
+    }).unwrap();
+    
     log.info(&format!("Connected to {}", addr));
     let (_, stream) = collector.framed(NFCollector).split();
 
