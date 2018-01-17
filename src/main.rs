@@ -115,7 +115,7 @@ fn main() {
 
     
     let writer = FileWriter::new(Path::new(out_file)).map_err(|err| {
-        println!("Failed to open {}: {}", out_file, err);
+        log.info(&format!("Failed to open {}: {}", out_file, err));
         std::process::exit(1);
     }).unwrap();
     
@@ -129,7 +129,7 @@ fn main() {
     
     // Bind both our sockets and then figure out what ports we got.
     let collector = UdpSocket::bind(&addr, &handle).map_err(|_| {
-        println!("Failed to bind to {}. Exiting...",addr);
+        log.info(&format!("Failed to bind to {}. Exiting...",addr));
         std::process::exit(1);
     }).unwrap();
     
