@@ -126,7 +126,7 @@ fn main() {
     
     // Bind both our sockets and then figure out what ports we got.
     let collector = UdpSocket::bind(&addr, &handle).map_err(|_| {
-        log.info(&format!("Failed to bind to {}.",addr));
+        println!("Failed to bind to {}. Exiting...",addr);
         std::process::exit(1);
     }).unwrap();
     
