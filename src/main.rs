@@ -13,7 +13,6 @@ mod log;
 use std::io;
 use std::net::SocketAddr;
 use std::path::Path;
-use std::time::Duration;
 use std::sync::mpsc::{self, Receiver};
 use clap::{Arg, App};
 
@@ -115,7 +114,11 @@ fn main() {
 
 
     
-    let writer = FileWriter::new(Path::new(out_file)).unwrap();
+    let writer = FileWriter::new(Path::new(out_file)).map_err(|err| {
+        println!("Failed to open {}: {}", out_file, err);
+        std::process::exit(1);
+    }).unwrap();
+    
     let addr: SocketAddr = address_and_port.parse().unwrap();
 
     let mut core = Core::new().unwrap();

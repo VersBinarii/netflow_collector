@@ -10,16 +10,14 @@ pub struct FileWriter {
 
 impl FileWriter {
     pub fn new(path: &Path) -> Result<FileWriter, io::Error> {
-        let file = match OpenOptions::new()
+        match OpenOptions::new()
             .create(true)
             .append(true)
             .open(path)
         {
-            Err(e) => return Err(e),
-            Ok(file) => file
-        };
-
-        Ok(FileWriter {file})
+            Err(e) => Err(e),
+            Ok(file) => Ok(FileWriter{file})
+        }
     }
 }
 
