@@ -136,8 +136,9 @@ fn main() {
     log.info(&format!("Connected to {}", addr));
     let (_, stream) = collector.framed(NFCollector).split();
 
-    let stream = stream.for_each(move |(_addr, message)| {
-        match cc.parse_netflow_packet(&message) {   
+    let stream = stream.for_each(move |(addr, message)| {
+        
+        match cc.parse_netflow_packet(&message, &addr) {   
             Ok(sets) => {
                 for s in sets {
                     let x = s.to_json();
